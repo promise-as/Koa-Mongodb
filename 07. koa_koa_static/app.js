@@ -1,14 +1,16 @@
 /*
-Koa 中 koa-bodyparser 中间件获取表单提交的数据
-  1. npm install --save koa-bodyparser
-  2. 引入 var bodyParser = require('koa-bodyparser');
-  3. app.use(bodyParser());
-  4. ctx.request.body;
+koa-static 静态资源中间件 静态 web 服务
+  1. cnpm install koa-static --save
+  2. const static = require('koa-static')
+  3. 配置中间件
+
+  app.use(static('static'))
 */
 var Koa = require('koa'),
   router = require('koa-router')(),
   views = require('koa-views'),
-  bodyParser = require('koa-bodyparser');
+  bodyParser = require('koa-bodyparser'),
+  static = require('koa-static')
 
 var app = new Koa();
 
@@ -16,6 +18,13 @@ var app = new Koa();
 app.use(views('views', {
   extension: 'ejs'
 }))
+
+// 配置静态 web 服务的中间件
+// app.use(static('/static'))
+
+app.use(static(__dirname + '/static'))
+
+app.use(static(__dirname + '/public'))
 
 // 配置 post bodyparser 的中间件
 app.use(bodyParser());
