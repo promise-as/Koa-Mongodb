@@ -45,38 +45,27 @@ const CONFIG = {
 app.use(session(CONFIG, app));
 
 router.get('/', async (ctx) => {
-
-  // koa 中没法直接设置中文的 cookie
-
-  var userinfo = new Buffer('张三').toString('base64');
-
-  ctx.cookies.set('userinfo', userinfo, {
-    maxAge: 60 * 1000 * 60
-  })
-
-  let list = {
-    name: '张三'
-  }
+  // 获取 session
+  console.log(ctx.session.userinfo);
 
   await ctx.render('index', {
-    list: list
+    list: {
+      name: '张三'
+    }
   })
 })
 
 router.get('/news', async (ctx) => {
+  // 获取 session
 
-  var data = ctx.cookies.get('userinfo');
-  var userinfo = new Buffer(data, 'base64').toString();
+  ctx.body = '登录成功';
+})
 
-  console.log(userinfo);
+router.get('/login', async (ctx) => {
+  // 设置 session
+  ctx.session.userinfo = '张三';
 
-  let app = {
-    name: '张三11'
-  }
-
-  await ctx.render('news', {
-    list: app
-  })
+  ctx.body = '登录成功';
 })
 
 app.use(router.routes()); // 启动路由
