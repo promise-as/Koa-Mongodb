@@ -30,64 +30,64 @@ var dbUrl = 'mongodb://localhost:27017/';
 var dbName = 'koa';
 
 // 连接数据库
-// console.time('start');
+console.time('start');
+MongoClient.connect(dbUrl, (err, client) => {
+  if (err) {
+    console.log(err);
+    return;
+  }
+  var db = client.db(dbName);
+  console.timeEnd('start');
+
+  // 增加数据
+  db.collection('user').insertOne(
+    {
+      'username': 'lisi11',
+      'age': 30,
+      'sex': '男',
+      'status': '1'
+    },function(err, result){
+      if(!err){
+        console.log('增加数据成功');
+
+        client.close();
+      }
+    }
+  )
+})
+
+// console.time('start1');
 // MongoClient.connect(dbUrl, (err, client) => {
-//   if (err) {
+//   if(err){
 //     console.log(err);
-//     return;
+//     return
 //   }
+  
 //   var db = client.db(dbName);
-//   console.timeEnd('start');
+//   // 查询数据
 
-//   // 增加数据
-//   db.collection('user').insertOne(
-//     {
-//       'username': '王五',
-//       'age': 26,
-//       'sex': '男',
-//       'status': '1'
-//     },function(err, result){
-//       if(!err){
-//         console.log('增加数据成功');
+//   var result = db.collection('user').find({});
 
-//         client.close();
-//       }
-//     }
-//   )
+//   result.toArray((err, docs) => {
+//     console.timeEnd('start1');
+//     console.log(docs);
+//   })
 // })
 
-console.time('start1');
-MongoClient.connect(dbUrl, (err, client) => {
-  if(err){
-    console.log(err);
-    return
-  }
+// console.time('start2');
+// MongoClient.connect(dbUrl, (err, client) => {
+//   if(err){
+//     console.log(err);
+//     return
+//   }
   
-  var db = client.db(dbName);
-  // 查询数据
+//   var db = client.db(dbName);
+//   // 查询数据
 
-  var result = db.collection('user').find({});
+//   var result = db.collection('user').find({});
 
-  result.toArray((err, docs) => {
-    console.timeEnd('start1');
-    console.log(docs);
-  })
-})
-
-console.time('start2');
-MongoClient.connect(dbUrl, (err, client) => {
-  if(err){
-    console.log(err);
-    return
-  }
-  
-  var db = client.db(dbName);
-  // 查询数据
-
-  var result = db.collection('user').find({});
-
-  result.toArray((err, docs) => {
-    console.timeEnd('start2');
-    console.log(docs);
-  })
-})
+//   result.toArray((err, docs) => {
+//     console.timeEnd('start2');
+//     console.log(docs);
+//   })
+// })
