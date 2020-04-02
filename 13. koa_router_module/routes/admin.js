@@ -19,4 +19,4 @@ router.use('/focus', focus);
 
 router.use('/newscate', newscate);
 
-module.exports = router;
+module.exports = router.routes();

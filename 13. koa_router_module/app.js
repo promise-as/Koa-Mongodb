@@ -6,6 +6,7 @@ var Koa = require('koa'),
 // 引入子模块
 var admin = require('./routes/admin.js');
 var api = require('./routes/api.js');
+var index = require('./routes/index.js');
 
 const app = new Koa();
 // 配置 koa-art-template 模块引擎
@@ -16,16 +17,13 @@ render(app, {
 });
 
 // 配置路由
-router.get('/', (ctx) => {
-
-  ctx.body = '这是一个首页';
-});
+router.use('/', index);
 
 /*
   /admin 配置子路由( 层级路由 )
   /admin/user
 */
-router.use('/admin', admin.routes());
+router.use('/admin', admin);
 
 /*
   /api/newlist 新闻列表的 api
